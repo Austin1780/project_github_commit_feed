@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Austin1780/project_github_commit_feed#readme",
   "dependencies": {
+    "bootstrap": "^3.3.7",
     "github": "^12.0.2"
   }
 }
