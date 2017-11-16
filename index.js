@@ -9,7 +9,6 @@ let host = "localhost";
 
 app.get("/", (req, res) => {
   console.log("inside get");
-  res.end("Hello GET!");
 });
 /*
 app.post('/', (req, res) => {
