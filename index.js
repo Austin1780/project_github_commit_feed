@@ -12,15 +12,5 @@ let results = gitHub.getRepos(owner,repo)
     console.error(err);
   });
 
-let sha = results[0].data[0]
+let sha = results[0];
 
-
-let url
-let author
-
-
-
-/*
-console.log("original getCommits: ");
-console.log(getCommits);
-*/
