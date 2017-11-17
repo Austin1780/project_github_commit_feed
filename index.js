@@ -2,7 +2,7 @@ let gitHub = require("./lib/getRepos.js");
 let http = require("http");
 let express = require("./lib/express.js");
 let router = require("./lib/router");
-let fs = require('fs');
+let fs = require("fs");
 let url = require("url");
 let querystring = require("querystring");
 
@@ -13,11 +13,9 @@ let host = "localhost";
 app.get("/", (req, res) => {});
 
 app.get("/commits", (req, res) => {
-   
   let userQuery = querystring.parse(req.url);
   let owner = userQuery["/commits?username"];
   let repo = userQuery["repo"];
- 
 
   gitHub.authenticate();
   gitHub
@@ -25,22 +23,38 @@ app.get("/commits", (req, res) => {
     .then(function(results) {
       resultsObject = results;
     })
+    /*.then(function() {
+      fs.writeFile("./data/commits.json", resultsObject, "utf8", err => {
+        if (err) {
+          throw err;
+        }
+      });
+    })*/
     .then(function() {
-      resultsObject;
+      fs.readFile("index.html", "utf8", function(err, data) {
+        let newData = "";
+
+        for (i = 0; i < resultsObject.data.length; i++) {
+          newData += resultsObject.data[i].sha;
+        }
+
+        res.writeHead(200, { "Content-Type": "text/html" });
+        data = data.replace("{{ commitFeed }}", newData);
+        console.log(data);
+
+        res.write(data);
+        res.end();
+      });
     })
     .catch(function(err) {
       console.error(err);
     });
 });
 
- 
 app.listen(port, host, () => {
   console.log(`server running at http://${host}:${port}/`);
 });
 
-
-
-  
 /*
 //const owner = "Austin1780";
 //const repo = "assignment_node_dictionary_reader";
